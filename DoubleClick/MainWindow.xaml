@@ -1,0 +1,39 @@
+﻿<Window x:Class="DoubleClick.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DoubleClick"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="525">
+    <Window.Resources>
+        <local:VisibleWhenTrue x:Key="VisibleWhenTrue" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <TextBlock>
+                    <Run>The red busy indicator is NOT preventing insanely fast double clicks</Run>
+                    <LineBreak/>
+                    <Run>from firing the command twice</Run>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <CheckBox Content="Enable CanExecute" IsChecked="{Binding IsCanExecuteEnabled}" />
+                <CheckBox Content="Enable DoubleClick blocker" IsChecked="{Binding IsDoubleClickBlockerEnabled}" />
+            </StackPanel>
+            <Button Command="{Binding Command}" Content="Click cmd" Height="100"
+                    PreviewMouseDown="UIElement_OnPreviewMouseDown"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Clicks}"></ItemsControl>
+        </StackPanel>
+        <!-- BusyIndicator -->
+        <Grid Grid.Row="0" Grid.RowSpan="2" 
+              Background="red" Opacity="0.5" Visibility="{Binding IsBusy, Converter={StaticResource VisibleWhenTrue}}" />
+    </Grid>
+</Window>
